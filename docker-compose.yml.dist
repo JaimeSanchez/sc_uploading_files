@@ -8,7 +8,7 @@ services:
       args:
         UID: $U_ID
     ports:
-      - "1000:80"
+      - 1000:80
     volumes:
       - ./public:/appdata/www/public
     depends_on:
@@ -19,7 +19,7 @@ services:
   docker-dev-env-for-symfony-be:
     container_name: docker-dev-env-for-symfony-be
     build:
-      context: docker/php/7.1
+      context: docker/php
       args:
         UID: $U_ID
     volumes:
@@ -40,7 +40,7 @@ services:
     build:
       context: ./docker/database
     ports:
-      - "10000:3306"
+      - 10000:3306
     environment:
       MYSQL_DATABASE: database
       MYSQL_ROOT_PASSWORD: root

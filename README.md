@@ -1,39 +1,101 @@
-# Symfony Docker
+# File Uploads in Symfony
 
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework, with full [HTTP/2](https://symfony.com/doc/current/weblink.html), HTTP/3 and HTTPS support.
+Well hi there! This repository holds the code and script
+for the [File Uploads in Symfony](https://symfonycasts.com/screencast/symfony-uploads) course on SymfonyCasts.
 
-![CI](https://github.com/dunglas/symfony-docker/workflows/CI/badge.svg)
+## Setup
 
-## Getting Started
+If you've just downloaded the code, congratulations!!
 
-1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/)
-2. Run `docker-compose build --pull --no-cache` to build fresh images
-3. Run `docker-compose up` (the logs will be displayed in the current shell)
-4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
-5. Run `docker-compose down --remove-orphans` to stop the Docker containers.
+To get it working, follow these steps:
 
-## Features
+**Download Composer dependencies**
 
-* Production, development and CI ready
-* Automatic HTTPS (in dev and in prod!)
-* HTTP/2, HTTP/3 and [Preload](https://symfony.com/doc/current/web_link.html) support
-* Built-in [Mercure](https://symfony.com/doc/current/mercure.html) hub
-* [Vulcain](https://vulcain.rocks) support
-* Just 2 services (PHP FPM and Caddy server)
-* Super-readable configuration
+Make sure you have [Composer installed](https://getcomposer.org/download/)
+and then run:
 
-**Enjoy!**
+```
+composer install
+```
 
-## Docs
+You may alternatively need to run `php composer.phar install`, depending
+on how you installed Composer.
 
-1. [Build options](docs/build.md)
-2. [Using Symfony Docker with an existing project](docs/existing-project.md)
-3. [Support for extra services](docs/extra-services.md)
-4. [Deploying in production](docs/production.md)
-5. [Installing Xdebug](docs/xdebug.md)
-6. [Using a Makefile](docs/makefile.md)
-7. [Troubleshooting](docs/troubleshooting.md)
+**Configure the .env (or .env.local) File**
 
-## Credits
+Open the `.env` file and make any adjustments you need - specifically
+`DATABASE_URL`. Or, if you want, you can create a `.env.local` file
+and *override* any configuration you need there (instead of changing
+`.env` directly).
 
-Created by [Kévin Dunglas](https://dunglas.fr), co-maintained by [Maxime Helias](https://twitter.com/maxhelias) and sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
+**Setup the Database**
+
+Again, make sure `.env` is setup for your computer. Then, create
+the database & tables!
+
+```
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
+```
+
+If you get an error that the database exists, that should
+be ok. But if you have problems, completely drop the
+database (`doctrine:database:drop --force`) and try again.
+
+**Start the built-in web server**
+
+You can use Nginx or Apache, but Symfony's local web server
+works even better.
+
+To install the Symfony local web server, follow
+"Downloading the Symfony client" instructions found
+here: https://symfony.com/download - you only need to do this
+once on your system.
+
+Then, to start the web server, open a terminal, move into the
+project, and run:
+
+```
+symfony serve
+```
+
+(If this is your first time using this command, you may see an
+error that you need to run `symfony server:ca:install` first).
+
+Now check out the site at `https://localhost:8000`
+
+Have fun!
+
+## Somebody Has To
+
+Somebody has to go polish the stars,
+They're looking a little bit dull.
+Somebody has to go polish the stars,
+For the eagles and starlings and gulls
+Have all been complaining they're tarnished and worn,
+They say they want new ones we cannot afford.
+So please get your rags
+And your polishing jars,
+Somebody has to go polish the stars.
+
+Shel Silverstein
+
+## A Space Riddle!
+
+> I'm not white and fluffy, but pieces of me *do* orbit the sun. What am I?
+
+**Answer**: The Oort Cloud!
+
+## Have Ideas, Feedback or an Issue?
+
+If you have suggestions or questions, please feel free to
+open an issue on this repository or comment on the course
+itself. We're watching both :).
+
+## Thanks!
+
+And as always, thanks so much for your support and letting
+us do what we love!
+
+<3 Your friends at SymfonyCasts
