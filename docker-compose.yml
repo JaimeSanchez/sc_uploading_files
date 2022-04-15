@@ -1,8 +1,8 @@
 version: '3.5'
 
 services:
-  docker-dev-env-for-symfony-web:
-    container_name: docker-dev-env-for-symfony-web
+  uploading-files-web:
+    container_name: uploading-files-web
     build:
       context: ./docker/nginx
       args:
@@ -12,12 +12,12 @@ services:
     volumes:
       - ./public:/appdata/www/public
     depends_on:
-      - docker-dev-env-for-symfony-be
+      - uploading-files-be
     networks:
-      - docker-dev-env-for-symfony-network
+      - uploading-files-network
 
-  docker-dev-env-for-symfony-be:
-    container_name: docker-dev-env-for-symfony-be
+  uploading-files-be:
+    container_name: uploading-files-be
     build:
       context: docker/php/7.1
       args:
@@ -31,12 +31,12 @@ services:
     environment:
       XDEBUG_CLIENT_HOST: 172.17.0.1
       XDEBUG_CLIENT_PORT: 9003
-      PHP_IDE_CONFIG: serverName=docker-dev-env-for-symfony
+      PHP_IDE_CONFIG: serverName=uploading-files
     networks:
-      - docker-dev-env-for-symfony-network
+      - uploading-files-network
 
-  docker-dev-env-for-symfony-db:
-    container_name: docker-dev-env-for-symfony-db
+  uploading-files-db:
+    container_name: uploading-files-db
     build:
       context: ./docker/database
     ports:
@@ -45,14 +45,14 @@ services:
       MYSQL_DATABASE: database
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - docker-dev-env-for-symfony-db-data:/var/lib/mysql
+      - uploading-files-db-data:/var/lib/mysql
     networks:
-      - docker-dev-env-for-symfony-network
+      - uploading-files-network
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
 volumes:
-  docker-dev-env-for-symfony-db-data:
+  uploading-files-db-data:
 
 networks:
-  docker-dev-env-for-symfony-network:
+  uploading-files-network:
     external: true

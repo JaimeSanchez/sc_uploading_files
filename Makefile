@@ -2,7 +2,7 @@
 
 OS = $(shell uname)
 UID = $(shell id -u)
-DOCKER_BE = docker-dev-env-for-symfony-be
+DOCKER_BE = uploading-files-be
 
 help: ## Show this help message
 	@echo 'usage: make [target]'
@@ -11,9 +11,9 @@ help: ## Show this help message
 	@egrep '^(.+)\:\ ##\ (.+)' ${MAKEFILE_LIST} | column -t -c 2 -s ':#'
 
 start: ## Start the containers
-	docker network create docker-dev-env-for-symfony-network || true
-	cp -n docker-compose.yml.dist docker-compose.yml || true
-	cp -n .env.dist .env || true
+	docker network create uploading-files-network || true
+	#cp -n docker-compose.yml.dist docker-compose.yml || true
+	#cp -n .env.dist .env || true
 	U_ID=${UID} docker-compose up -d
 
 stop: ## Stop the containers
@@ -23,9 +23,9 @@ restart: ## Restart the containers
 	$(MAKE) stop && $(MAKE) start
 
 build: ## Rebuilds all the containers
-	docker network create docker-dev-env-for-symfony-network || true
-	cp -n docker-compose.yml.dist docker-compose.yml || true
-	cp -n .env.dist .env || true
+	docker network create uploading-files-network || true
+	#cp -n docker-compose.yml.dist docker-compose.yml || true
+	#cp -n .env.dist .env || true
 	U_ID=${UID} docker-compose build
 
 prepare: ## Runs backend commands
